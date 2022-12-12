@@ -1,6 +1,11 @@
-import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { Keypair, SystemProgram, Transaction, TransactionSignature } from '@solana/web3.js';
-import { FC, useCallback } from 'react';
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import {
+    Keypair,
+    SystemProgram,
+    Transaction,
+    TransactionSignature,
+} from "@solana/web3.js";
+import { FC, useCallback } from "react";
 import { notify } from "../utils/notifications";
 
 export const SendTransaction: FC = () => {
@@ -9,12 +14,12 @@ export const SendTransaction: FC = () => {
 
     const onClick = useCallback(async () => {
         if (!publicKey) {
-            notify({ type: 'error', message: `Wallet not connected!` });
-            console.log('error', `Send Transaction: Wallet not connected!`);
+            notify({ type: "error", message: `Wallet not connected!` });
+            console.log("error", `Send Transaction: Wallet not connected!`);
             return;
         }
 
-        let signature: TransactionSignature = '';
+        let signature: TransactionSignature = "";
         try {
             const transaction = new Transaction().add(
                 SystemProgram.transfer({
@@ -26,12 +31,25 @@ export const SendTransaction: FC = () => {
 
             signature = await sendTransaction(transaction, connection);
 
-            await connection.confirmTransaction(signature, 'confirmed');
+            await connection.confirmTransaction(signature, "confirmed");
             console.log(signature);
-            notify({ type: 'success', message: 'Transaction successful!', txid: signature });
+            notify({
+                type: "success",
+                message: "Transaction successful!",
+                txid: signature,
+            });
         } catch (error: any) {
-            notify({ type: 'error', message: `Transaction failed!`, description: error?.message, txid: signature });
-            console.log('error', `Transaction failed! ${error?.message}`, signature);
+            notify({
+                type: "error",
+                message: `Transaction failed!`,
+                description: error?.message,
+                txid: signature,
+            });
+            console.log(
+                "error",
+                `Transaction failed! ${error?.message}`,
+                signature
+            );
             return;
         }
     }, [publicKey, notify, connection, sendTransaction]);
@@ -40,13 +58,14 @@ export const SendTransaction: FC = () => {
         <div>
             <button
                 className="group w-60 m-2 btn animate-pulse disabled:animate-none bg-gradient-to-r from-[#9945FF] to-[#14F195] hover:from-pink-500 hover:to-yellow-500 ... "
-                onClick={onClick} disabled={!publicKey}
+                onClick={onClick}
+                disabled={!publicKey}
             >
                 <div className="hidden group-disabled:block ">
                     Wallet not connected
                 </div>
-                <span className="block group-disabled:hidden" > 
-                    Send Transaction 
+                <span className="block group-disabled:hidden">
+                    Send Transaction
                 </span>
             </button>
         </div>
