@@ -22,6 +22,7 @@ import pkg from "../../../package.json";
 import useUserSOLBalanceStore from "../../stores/useUserSOLBalanceStore";
 import { useRouter } from "next/router";
 import { fakeNftData } from "utils/fakeData";
+import useNftStore from "stores/useNftStore";
 
 export const HomeView: FC = ({}) => {
   const router = useRouter();
@@ -32,19 +33,28 @@ export const HomeView: FC = ({}) => {
   const balance = useUserSOLBalanceStore((s) => s.balance);
   const { getUserSOLBalance } = useUserSOLBalanceStore();
 
-  const [nftData, setNftData] = useState([]);
+  //   const [nftData, setNftData] = useState(fakeNftData);
 
   function navigateToDetails(id: number) {
     router.push(`/nft/${id}`);
   }
 
+  let nftData = useNftStore((state) => state.nfts);
+  let setNftData = useNftStore((state) => state.set);
+
   function transformToChest(id: number) {
+    setNftData((prevState) => ({
+      nfts: prevState.nfts.map((nft) => {
+        if (nft.id === id) {
+          console.log(`NFT ${nft.id}`);
+          return { ...nft, isChest: true, holds: [] };
+        } else {
+          return nft;
+        }
+      }),
+    }));
     console.log("transformToChest", id);
   }
-
-  useEffect(() => {
-    setNftData(fakeNftData);
-  }, []);
 
   useEffect(() => {
     if (wallet.publicKey) {
