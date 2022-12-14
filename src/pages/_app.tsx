@@ -17,20 +17,20 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
       <Head>
         <title>Solana Scaffold Lite</title>
       </Head>
-      <ChakraProvider>
-        <ContextProvider>
-          <div className="flex flex-col h-screen">
-            <Notifications />
-            <AppBar />
+      {/* <ChakraProvider> */}
+      <ContextProvider>
+        <div className="flex flex-col h-screen">
+          <Notifications />
+          <AppBar />
 
-            <ContentContainer>
-              <Component {...pageProps} />
-            </ContentContainer>
+          <ContentContainer>
+            <Component {...pageProps} />
+          </ContentContainer>
 
-            <Footer />
-          </div>
-        </ContextProvider>
-      </ChakraProvider>
+          <Footer />
+        </div>
+      </ContextProvider>
+      {/* </ChakraProvider> */}
     </>
   );
 };

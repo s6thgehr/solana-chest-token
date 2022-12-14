@@ -39,8 +39,8 @@ export const HomeView: FC = ({}) => {
     router.push(`/nft/${id}`);
   }
 
-  let nftData = useNftStore((state) => state.nfts);
-  let setNftData = useNftStore((state) => state.set);
+  const nftData = useNftStore((state) => state.nfts);
+  const setNftData = useNftStore((state) => state.set);
 
   function transformToChest(id: number) {
     setNftData((prevState) => ({
@@ -53,7 +53,7 @@ export const HomeView: FC = ({}) => {
         }
       }),
     }));
-    console.log("transformToChest", id);
+    // console.log("transformToChest", id);
   }
 
   useEffect(() => {

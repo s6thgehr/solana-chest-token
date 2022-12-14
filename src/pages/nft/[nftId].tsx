@@ -1,6 +1,7 @@
 import { Button, Flex, List, ListItem, Select } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import useNftStore from "stores/useNftStore";
 import { fakeNftData } from "utils/fakeData";
 
 export default function NftDetails() {
@@ -8,9 +9,24 @@ export default function NftDetails() {
 
   const { nftId } = router.query;
 
-  const [nftData, setNftData] = useState([]);
   const [nftDetails, setNftDetails] = useState(null);
   const [addNft, setAddNft] = useState("");
+  const nftData = useNftStore((state) => state.nfts);
+  let setNftData = useNftStore((state) => state.set);
+
+  function transformToChest(id: number) {
+    setNftData((prevState) => ({
+      nfts: prevState.nfts.map((nft) => {
+        if (nft.id === id) {
+          console.log(`NFT ${nft.id}`);
+          return { ...nft, isChest: true, holds: [] };
+        } else {
+          return nft;
+        }
+      }),
+    }));
+    // console.log("transformToChest", id);
+  }
 
   function navigateToDetails(id: number) {
     router.push(`/nft/${id}`);
@@ -23,10 +39,6 @@ export default function NftDetails() {
   function onSubmitAddNft() {
     console.log("onSubmitAddNft");
   }
-
-  useEffect(() => {
-    setNftData(fakeNftData);
-  }, [fakeNftData, setNftData]);
 
   useEffect(() => {
     setNftDetails(nftData.find((nft) => nft.id.toString() === nftId));
@@ -48,9 +60,7 @@ export default function NftDetails() {
               Current Details
             </h2>
 
-            <p className="text-left text-2xl mt-4">
-              Description: {nftDetails.description}
-            </p>
+            <p className="text-left text-2xl mt-4">{nftDetails.description}</p>
           </div>
         )}
 
@@ -73,29 +83,43 @@ export default function NftDetails() {
         )}
 
         <Flex alignItems="center" className="mt-16">
-          <Select
-            placeholder="Add to Chest Nft"
-            className="bg-clip-text"
-            value={addNft}
-            onChange={onAddNft}
-          >
-            {fakeNftData
-              .filter((nft) => nft.id.toString() !== nftId)
-              .map((nft) => {
-                return (
-                  <option key={nft.id} value={nft.id}>
-                    {nft.name}
-                  </option>
-                );
-              })}
-          </Select>
-          <Button
-            variant="solid"
-            className="ml-4 bg-gradient-to-r btn from-[#4a2103] to-[#e4f009] hover:from-pink-500 hover:to-yellow-500"
-            onClick={onSubmitAddNft}
-          >
-            Add Nft
-          </Button>
+          {nftDetails?.isChest ? (
+            <>
+              <Select
+                placeholder="Add to Chest Nft"
+                className="bg-clip-text"
+                value={addNft}
+                onChange={onAddNft}
+              >
+                {fakeNftData
+                  .filter((nft) => nft.id.toString() !== nftId)
+                  .map((nft) => {
+                    return (
+                      <option key={nft.id} value={nft.id}>
+                        {nft.name}
+                      </option>
+                    );
+                  })}
+              </Select>
+              <Button
+                variant="solid"
+                className="ml-4 bg-gradient-to-r btn from-[#4a2103] to-[#e4f009] hover:from-pink-500 hover:to-yellow-500"
+                onClick={onSubmitAddNft}
+              >
+                Add Nft
+              </Button>
+            </>
+          ) : (
+            <Button
+              variant="solid"
+              className="ml-4 bg-gradient-to-r btn from-[#4a2103] to-[#e4f009] hover:from-pink-500 hover:to-yellow-500"
+              onClick={() => {
+                transformToChest(nftDetails.id);
+              }}
+            >
+              Transform to chest
+            </Button>
+          )}
         </Flex>
       </div>
     </div>
