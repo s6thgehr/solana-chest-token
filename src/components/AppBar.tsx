@@ -18,7 +18,7 @@ export const AppBar: FC = (props) => {
       {/* NavBar / Header */}
       <div className="navbar flex flex-row md:mb-2 shadow-lg bg-neutral text-neutral-content">
         <div className="navbar-start">
-          <label htmlFor="my-drawer" className="btn btn-square btn-ghost">
+          {/* <label htmlFor="my-drawer" className="btn btn-square btn-ghost">
             <svg
               className="inline-block w-6 h-6 stroke-current"
               xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +32,7 @@ export const AppBar: FC = (props) => {
                 d="M4 6h16M4 12h16M4 18h16"
               ></path>
             </svg>
-          </label>
+          </label> */}
 
           <button
             className="hidden sm:inline w-22 h-22 md:p-2"
@@ -105,9 +105,9 @@ export const AppBar: FC = (props) => {
             <Link href="/">
               <a className="btn btn-ghost btn-sm rounded-btn">Home</a>
             </Link>
-            <Link href="/basics">
+            {/* <Link href="/basics">
               <a className="btn btn-ghost btn-sm rounded-btn">Basics</a>
-            </Link>
+            </Link> */}
           </div>
         </div>
 
