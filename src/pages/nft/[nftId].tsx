@@ -37,7 +37,15 @@ export default function NftDetails() {
   }
 
   function onSubmitAddNft() {
-    console.log("onSubmitAddNft");
+    setNftData((prevState) => ({
+      nfts: prevState.nfts.map((nft) => {
+        if (nft.id.toString() === nftId) {
+          return { ...nft, holds: [...nft.holds, Number(addNft)] };
+        } else {
+          return nft;
+        }
+      }),
+    }));
   }
 
   useEffect(() => {
@@ -64,23 +72,30 @@ export default function NftDetails() {
           </div>
         )}
 
-        {nftDetails && nftDetails.isChest && (
-          <List className="mt-4">
-            {nftDetails?.holds?.map((nftId) => {
-              const nft = nftData.find((nft) => nft.id === nftId);
+        {nftDetails &&
+          nftDetails.isChest &&
+          (nftDetails.holds.length > 0 ? (
+            <>
+              <h2 className="text-3xl mt-8">Holdings</h2>
+              <List className="mt-4">
+                {nftDetails?.holds?.map((nftId) => {
+                  const nft = nftData.find((nft) => nft.id === nftId);
 
-              return (
-                <ListItem
-                  key={nftId}
-                  className="cursor-pointer mt-2"
-                  onClick={() => navigateToDetails(nft?.id)}
-                >
-                  {nft?.name}
-                </ListItem>
-              );
-            })}
-          </List>
-        )}
+                  return (
+                    <ListItem
+                      key={nftId}
+                      className="cursor-pointer mt-2"
+                      onClick={() => navigateToDetails(nft?.id)}
+                    >
+                      {nft?.name}
+                    </ListItem>
+                  );
+                })}
+              </List>
+            </>
+          ) : (
+            <div className="mt-8">This chest is empty</div>
+          ))}
 
         <Flex alignItems="center" className="mt-16">
           {nftDetails?.isChest ? (

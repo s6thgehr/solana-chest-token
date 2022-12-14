@@ -46,7 +46,6 @@ export const HomeView: FC = ({}) => {
     setNftData((prevState) => ({
       nfts: prevState.nfts.map((nft) => {
         if (nft.id === id) {
-          console.log(`NFT ${nft.id}`);
           return { ...nft, isChest: true, holds: [] };
         } else {
           return nft;
