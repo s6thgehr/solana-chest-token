@@ -5,7 +5,7 @@ Final project of Encodes Solana Bootcamp November 2022.
 
 The idea is to transfrom NFTs into chest tokens that can own other tokens.
 
-Solana program to transform NFTs into chest token can be found [here]().
+Solana program to transform NFTs into chest token can be found [here](https://github.com/iceomatic/solana-chest).
 
 Presentation can be found [here](https://docs.google.com/presentation/d/1kt-Widbdkwc-HYni-0UG-PVVY7el21zxXjkUgWyqB8k/edit#slide=id.gcb9a0b074_1_213).
 
