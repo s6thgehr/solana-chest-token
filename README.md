@@ -1,11 +1,13 @@
 
-# Solana dApp Scaffold Next
+# Solana Chest Token
 
-The Solana dApp Scaffold repos are meant to house good starting scaffolds for ecosystem developers to get up and running quickly with a front end client UI that integrates several common features found in dApps with some basic usage examples. Wallet Integration. State management. Components examples. Notifications. Setup recommendations.
+Final project of Encodes Solana Bootcamp November 2022.
 
-Responsive                     |  Desktop
-:-------------------------:|:-------------------------:
-![](scaffold-mobile.png)  |  ![](scaffold-desktop.png)
+The idea is to transfrom NFTs into chest tokens that can own other tokens.
+
+Solana program to transform NFTs into chest token can be found here.
+
+Presentation can be found here
 
 ## Getting Started
 
